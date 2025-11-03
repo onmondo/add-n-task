@@ -25,4 +25,9 @@
                 "forceConsistentCasingInFileNames": true
             }
         }    
-    
+
+5. Install Express and other tools for routing
+
+    `npm install -D @types/express nodemon`
+
+    `npm install -save express`
