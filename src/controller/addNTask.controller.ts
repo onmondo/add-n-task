@@ -1,7 +1,11 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { nGenerateRandomInt, nAddOnePerDigit } from '../util/addNTask.util';
+import { AddNTaskService } from '../service/addNTask.service';
+import { AddNTaskRepository } from '../repository/addNTask.repository';
 
 const addNTaskController = Router();
+
+const service = new AddNTaskService(new AddNTaskRepository());
 
 addNTaskController.get('/randomnumber', async (
   _req: Request,
@@ -9,20 +13,14 @@ addNTaskController.get('/randomnumber', async (
   _next: NextFunction
 ) => {
   try {
-    const randomNumber = await nGenerateRandomInt(1000, 10000);
-    console.log(randomNumber);
-    const randomNumberAddOne = nAddOnePerDigit(randomNumber, 1);
-    console.log(randomNumberAddOne);
+    const result = await service.GetRandomNumber();
 
     // objects are treated as JSON content type
-    res.send({
-      number: `${randomNumber}`,
-      answer: randomNumberAddOne
-    });
+    res.send(result);
   } catch (err) {
-    const errorMsg = `Error generating random number: ${err}`;
+    const errorMsg = `Error generating random number: \n${err}`;
     console.error(errorMsg);
-    res.send({
+    res.status(500).send({
       error: errorMsg
     });
   }
