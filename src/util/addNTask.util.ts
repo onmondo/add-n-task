@@ -11,7 +11,8 @@ export function nGenerateRandomInt(min: number, max: number): Promise<number> {
 
 export function nAddOnePerDigit(num: number, addN: number) {
   return `${num}`.split('').reduce((accumulatedString: string, char: string) => {
-    const digit = `${(Number.parseInt(char) + addN)}`.charAt(0);
+    const computedString = `${(Number.parseInt(char) + addN)}`
+    const digit = computedString.charAt(computedString.length - 1);
     accumulatedString = accumulatedString + digit;
     return accumulatedString;
   }, '');
