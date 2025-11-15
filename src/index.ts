@@ -11,6 +11,8 @@ app.get('/', async (_req: Request, res: Response) => {
   res.send('Add N Task up and running...');
 });
 
+app.use(express.json());
+
 // mount router to app
 app.use('/api/v1', addNTaskController);
 

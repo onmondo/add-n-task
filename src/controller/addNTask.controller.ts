@@ -26,4 +26,22 @@ addNTaskController.get('/randomnumber', async (
   }
 });
 
+addNTaskController.post('/randomnumber', async (
+  req: Request,
+  res: Response,
+  _next: NextFunction
+) => {
+  try {
+    const result = await service.GuessNumber(req);
+
+    res.send(result);
+  } catch (err) {
+    const errorMsg = `Something went wrong: \n${err}`;
+    console.error(errorMsg);
+    res.status(500).send({
+      error: errorMsg
+    });
+  }
+});
+
 export default addNTaskController;

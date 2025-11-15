@@ -1,6 +1,7 @@
-import { CreatedNDigitNumber, CreateNDigitNumber } from "../dto/createNDigitNumber";
-import { AddNTaskRepository } from "../repository/addNTask.repository";
-import { nAddOnePerDigit, nGenerateRandomInt } from "../util/addNTask.util";
+import { Request } from 'express';
+import { CreatedNDigitNumber, CreateNDigitNumber } from '../dto/createNDigitNumber';
+import { AddNTaskRepository } from '../repository/addNTask.repository';
+import { nAddOnePerDigit, nGenerateRandomInt } from '../util/addNTask.util';
 
 export class AddNTaskService {
   constructor(
@@ -32,5 +33,20 @@ export class AddNTaskService {
     }
 
     throw Error('Failed to generate number');
+  }
+
+  async GuessNumber(req: Request) {
+    console.log(req)
+    const { id, answer } = req.body;
+
+    return {
+      statusCode: 200,
+      message: `Test answer endpoint`,
+      data: {
+        id,
+        answer,
+        isCorrect: false,
+      }
+    }
   }
 }
