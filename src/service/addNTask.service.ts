@@ -36,17 +36,34 @@ export class AddNTaskService {
   }
 
   async GuessNumber(req: Request) {
-    console.log(req)
     const { id, answer } = req.body;
+    const reqAnswer = answer as string;
+
+    const result: unknown = await this.repository.getNDigitNumber(id);
+    if (result) {
+      const generatedNumberRecord = result as CreatedNDigitNumber;
+
+      if (reqAnswer === generatedNumberRecord.correctAnswer) {
+        return {
+          statusCode: 200,
+          message: `Answer is correct`,
+          data: {
+            id,
+            answer,
+            isCorrect: true,
+          }
+        };
+      }
+    }
 
     return {
       statusCode: 200,
-      message: `Test answer endpoint`,
+      message: `You answer is wrong`,
       data: {
         id,
         answer,
         isCorrect: false,
       }
-    }
+    };
   }
 }
